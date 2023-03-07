@@ -21,4 +21,6 @@ extern int inet_pton (int __af, const char *__restrict __cp,
 
 extern int connect(int __fd, const struct sockaddr *__addr, socklen_t __len);
 
+extern ssize_t send(int __fd, const void *__buf, size_t __n, int __flags);
+
 //extern size_t strlen(const char *__s); // can use the rust inbuilt function.
