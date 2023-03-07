@@ -53,6 +53,14 @@ fn main() {
     // println!("Hello, world! {:?}", output.to_string());
 }
 
+/*
+todo list :
+1. test the struct sockaddr_in, like whether buffer is necessary or not
+2. do something of type conversion, like usize to long 
+3. make use of function inet_pton()
+4. send a request
+ */
+
 fn test() {
     let payload = String::from("likhe jo khat tujhe, jo teri yaad me.....");
 
