@@ -1,0 +1,60 @@
+in interface.c
+//tried to make it non constant, still testing this because refernce is working in it
+//extern int connect(int __fd, struct sockaddr * __addr, socklen_t __len);  
+
+
+in main.rs 
+     //let status = connect(client_fd, &serv_addr, mem::size_of::<sockaddr_in>() as u32);
+
+saksham@Saksham-sys:~/project/REST_on_Rust$ cargo run
+   Compiling REST_on_Rust v0.1.0 (/home/saksham/project/REST_on_Rust)
+error: failed to run custom build command for `REST_on_Rust v0.1.0 (/home/saksham/project/REST_on_Rust)`
+
+Caused by:
+  process didn't exit successfully: `/home/saksham/project/REST_on_Rust/target/debug/build/REST_on_Rust-f32b922fe16fb89a/build-script-build` (exit status: 101)
+  --- stdout
+  CMAKE_TOOLCHAIN_FILE_x86_64-unknown-linux-gnu = None
+  CMAKE_TOOLCHAIN_FILE_x86_64_unknown_linux_gnu = None
+  HOST_CMAKE_TOOLCHAIN_FILE = None
+  CMAKE_TOOLCHAIN_FILE = None
+  CMAKE_GENERATOR_x86_64-unknown-linux-gnu = None
+  CMAKE_GENERATOR_x86_64_unknown_linux_gnu = None
+  HOST_CMAKE_GENERATOR = None
+  CMAKE_GENERATOR = None
+  CMAKE_PREFIX_PATH_x86_64-unknown-linux-gnu = None
+  CMAKE_PREFIX_PATH_x86_64_unknown_linux_gnu = None
+  HOST_CMAKE_PREFIX_PATH = None
+  CMAKE_PREFIX_PATH = None
+  CMAKE_x86_64-unknown-linux-gnu = None
+  CMAKE_x86_64_unknown_linux_gnu = None
+  HOST_CMAKE = None
+  CMAKE = None
+  running: "cmake" "/home/saksham/project/REST_on_Rust/libinterface" "-DCMAKE_INSTALL_PREFIX=/home/saksham/project/REST_on_Rust/target/debug/build/REST_on_Rust-46d5f7c49695f134/out" "-DCMAKE_C_FLAGS= -ffunction-sections -fdata-sections -fPIC -m64" "-DCMAKE_C_COMPILER=/usr/bin/cc" "-DCMAKE_CXX_FLAGS= -ffunction-sections -fdata-sections -fPIC -m64" "-DCMAKE_CXX_COMPILER=/usr/bin/c++" "-DCMAKE_ASM_FLAGS= -ffunction-sections -fdata-sections -fPIC -m64" "-DCMAKE_ASM_COMPILER=/usr/bin/cc" "-DCMAKE_BUILD_TYPE=Debug"
+  -- Configuring done
+  -- Generating done
+  -- Build files have been written to: /home/saksham/project/REST_on_Rust/target/debug/build/REST_on_Rust-46d5f7c49695f134/out/build
+  running: "cmake" "--build" "." "--target" "install" "--config" "Debug"
+  Consolidate compiler generated dependencies of target interface
+  [ 50%] Building C object CMakeFiles/interface.dir/interface.c.o
+
+  --- stderr
+  /home/saksham/project/REST_on_Rust/libinterface/interface.c:12:15: warning: empty declaration with storage class specifier does not redeclare tag
+     12 | extern struct sockaddr_in;
+        |               ^~~~~~~~~~~
+  /home/saksham/project/REST_on_Rust/libinterface/interface.c:22:12: error: conflicting types for ‘connect’; have ‘int(int,  struct sockaddr *, socklen_t)’ {aka ‘int(int,  struct sockaddr *, unsigned int)’}
+     22 | extern int connect(int __fd, struct sockaddr * __addr, socklen_t __len);
+        |            ^~~~~~~
+  In file included from /usr/include/netinet/in.h:23,
+                   from /usr/include/arpa/inet.h:22,
+                   from /home/saksham/project/REST_on_Rust/libinterface/interface.c:1:
+  /usr/include/x86_64-linux-gnu/sys/socket.h:126:12: note: previous declaration of ‘connect’ with type ‘int(int,  const struct sockaddr *, socklen_t)’ {aka ‘int(int,  const struct sockaddr *, unsigned int)’}
+    126 | extern int connect (int __fd, __CONST_SOCKADDR_ARG __addr, socklen_t __len);
+        |            ^~~~~~~
+  gmake[2]: *** [CMakeFiles/interface.dir/build.make:76: CMakeFiles/interface.dir/interface.c.o] Error 1
+  gmake[1]: *** [CMakeFiles/Makefile2:83: CMakeFiles/interface.dir/all] Error 2
+  gmake: *** [Makefile:136: all] Error 2
+  thread 'main' panicked at '
+  command did not execute successfully, got: exit status: 2
+
+  build script failed, must exit now', /home/saksham/.cargo/registry/src/github.com-1ecc6299db9ec823/cmake-0.1.49/src/lib.rs:1104:5
+  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

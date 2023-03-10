@@ -23,11 +23,15 @@ use std::mem;
 const PF_INET : c_int = 2;
 const AF_INET : c_int = PF_INET;
 
+
+//#[derive(Debug)]
+
 struct in_addr {
     s_addr : u32,
 }
 
-struct sockaddr_in{
+//#[derive(Debug)]
+struct sockaddr_in {
     sin_family : c_uint,
     sin_port   : u16,
     sin_addr   : in_addr,
@@ -51,6 +55,7 @@ fn main() {
     // };
     // let output = (output as u8 ) as char;
     // println!("Hello, world! {:?}", output.to_string());
+    test()
 }
 
 /*
@@ -59,11 +64,11 @@ todo list :
 2. do something of type conversion, like usize to long 
 3. make use of function inet_pton()
 4. send a request
- */
+*/
 
 fn test() {
     let payload = String::from("likhe jo khat tujhe, jo teri yaad me.....");
-
+    
     unsafe {
         let client_fd = socket(2, 1, 0);
         let serv_addr = sockaddr_in {
@@ -71,8 +76,13 @@ fn test() {
             sin_port   : htons(8080),
             sin_addr   : in_addr { s_addr: 16777343 },
         };
-        let status = connect(client_fd, &serv_addr, mem::size_of(serv_addr));
-        send(client_fd, payload, payload.len(), 0);
+        // println!("{:?}", mem::size_of::<sockaddr_in>());
+        // println!("{:?}", client_fd);
+        // println!("{:?}", serv_addr);
+        let status = connect(client_fd, serv_addr, mem::size_of::<sockaddr_in>() as u32);
+        //let status = connect(client_fd, &serv_addr, mem::size_of::<sockaddr_in>() as u32);
+
+        //send(client_fd, payload, payload.len(), 0);
         // note to me in future, may be convert every datatype according to rust for better compatiblity or idk may be a fucnction which can help converitng values, or may be some thing else idk, plz help me 🥲
 
     }
