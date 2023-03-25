@@ -3,7 +3,9 @@ use std::ffi::{
         c_int,
         c_uint,
         c_void, 
-        c_ulong, c_long
+        c_ulong, 
+        c_long,
+        CString
     };
 use std::mem;
 
@@ -45,7 +47,9 @@ extern "C" {
     fn inet_pton(__af : c_int, __cp : *mut c_char, __buf : *mut c_void) -> c_int;
     fn connect(__fd : c_int, __addr : *mut sockaddr_in, __len: c_uint) -> c_int;
     fn send(__fd : c_int, __buf : *mut c_void, __n : c_ulong, __flag : c_int ) -> c_long;
-
+    //------------test_edition----------- 
+    fn test_interface(domain : CString, port : c_int, payload : CString) -> c_int;
+    fn test_fun(i : c_int);
 }
 
 fn main() {
@@ -67,7 +71,7 @@ todo list :
 */
 
 fn test() {
-    let payload = String::from("likhe jo khat tujhe, jo teri yaad me.....");
+    //let payload = CString::from("likhe jo khat tujhe, jo teri yaad me.....");
     
     unsafe {
         let client_fd = socket(2, 1, 0);
@@ -79,11 +83,24 @@ fn test() {
         // println!("{:?}", mem::size_of::<sockaddr_in>());
         // println!("{:?}", client_fd);
         // println!("{:?}", serv_addr);
-        let status = connect(client_fd, serv_addr, mem::size_of::<sockaddr_in>() as u32);
+        //let status = connect(client_fd, serv_addr, mem::size_of::<sockaddr_in>() as u32);
         //let status = connect(client_fd, &serv_addr, mem::size_of::<sockaddr_in>() as u32);
 
         //send(client_fd, payload, payload.len(), 0);
         // note to me in future, may be convert every datatype according to rust for better compatiblity or idk may be a fucnction which can help converitng values, or may be some thing else idk, plz help me 🥲
+        
+        
+        //-------------test edition-------------------
+
+        let payload = CString::new("Likhe jo khat tujhe, jo teri yaad mee...........").expect("lol error in payload");
+        let port: c_int = 8080;
+        let domain = CString::new("127.0.0.1").expect("lol error in domain");
+
+        //let *mut pay : c_char = 
+
+        test_fun(port);
+        test_interface(domain, port, payload);
+        // let test_string= payload as i8;
 
     }
 }

@@ -27,3 +27,40 @@ extern int connect(int __fd, const struct sockaddr * __addr, socklen_t __len);
 extern ssize_t send(int __fd, const void *__buf, size_t __n, int __flags);
 
 //extern size_t strlen(const char *__s); // can use the rust inbuilt function.
+
+int test_interface(char* domain, int portt, char* payload) {
+     int status, valread, client_fd;
+     struct sockaddr_in serv_addr; // stucture in socket.h
+
+     char* payloadd = "message to the server and can pur any header file here";
+     char buffer[1024] = {0};
+     printf("payload toh yeh hai : %s\n  \n port is %d \ndoamin is %s\n", payloadd, portt, domain);
+
+     if ((client_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0 ) {
+          printf("Error occur in socket creation\n");
+          return -1;
+     }
+     serv_addr.sin_family = AF_INET;
+     serv_addr.sin_port = htons(portt);
+
+     if (inet_pton(AF_INET, domain, &serv_addr.sin_addr) <= 0 ) {
+          printf("Address not supported\n");
+          return -1;
+     }
+     printf("inet ne yeh diya %d", serv_addr.sin_addr.s_addr);
+
+     if ((status = connect(client_fd, (struct sockaddr*) &serv_addr, sizeof(serv_addr))) < 0) {
+          printf("Connection failed\n");
+          return -1;
+     }
+
+     send(client_fd, payload, strlen(payloadd), 0);
+
+     return 0;
+}
+
+//j+-=-------------------just for the test purpose only------------------------
+
+void test_fun(int i) {
+     printf("test fun : %d \n\n", i);
+}
